@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <sensor_msgs/Image.h>
 #include <futrobotros/State.h>
 #include <futrobotros/Poses.h>
 
@@ -31,7 +30,7 @@ void strategyCallback(const futrobotros::State::ConstPtr& msg)
 int main(int argc, char **argv)
 {
 	// Init ROS
-	ros::init(argc, argv, "localization");
+	ros::init(argc, argv, "strategy");
 
 	// Init a node handler
 	ros::NodeHandle n;

@@ -35,7 +35,7 @@ void controlCallback(const futrobotros::Poses::ConstPtr& msg)
 int main(int argc, char **argv)
 {
 	// Init ROS
-	ros::init(argc, argv, "localization");
+	ros::init(argc, argv, "control");
 
 	// Init a node handler
 	ros::NodeHandle n;

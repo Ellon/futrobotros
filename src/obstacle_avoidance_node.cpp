@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <sensor_msgs/Image.h>
 #include <futrobotros/Poses.h>
 
 // Declare the publisher for robot poses after corrections
@@ -30,7 +29,7 @@ void obstacleAvoidanceCallback(const futrobotros::Poses::ConstPtr& msg)
 int main(int argc, char **argv)
 {
 	// Init ROS
-	ros::init(argc, argv, "localization");
+	ros::init(argc, argv, "obstacle_avoidance");
 
 	// Init a node handler
 	ros::NodeHandle n;

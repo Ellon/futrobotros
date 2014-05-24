@@ -106,6 +106,7 @@ add_executable(localization_node src/localization_node.cpp)
 add_executable(strategy_node src/strategy_node.cpp)
 add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp)
 add_executable(control_node src/control_node.cpp)
+add_executable(transmission_node src/transmission_node.cpp)
 
 
 ## Add cmake target dependencies of the executable/library
@@ -123,6 +124,9 @@ target_link_libraries(obstacle_avoidance_node
   ${catkin_LIBRARIES}
 )
 target_link_libraries(control_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(transmission_node
   ${catkin_LIBRARIES}
 )
 
