@@ -1,9 +1,15 @@
 <launch>
-
-<node pkg="futrobotros" type="localization_node" name="localization"/>
-<node pkg="futrobotros" type="strategy_node" name="strategy"/>
-<node pkg="futrobotros" type="obstacle_avoidance_node" name="obstacle_avoidance"/>
-<node pkg="futrobotros" type="control_node" name="control"/>
-<node pkg="futrobotros" type="transmission_node" name="transmission"/>
-
+  <node pkg="futrobotros" type="localization_node" name="localization">
+    <remap from="localization_output" to="strategy_input"/>
+  </node>
+  <node pkg="futrobotros" type="strategy_node" name="strategy">
+    <remap from="strategy_output" to="obstacle_avoidance_input"/>
+  </node>
+  <node pkg="futrobotros" type="obstacle_avoidance_node" name="obstacle_avoidance">
+    <remap from="obstacle_avoidance_output" to="control_input"/>
+  </node>
+  <node pkg="futrobotros" type="control_node" name="control">
+    <remap from="control_output" to="transmission_input"/>
+  </node>
+  <node pkg="futrobotros" type="transmission_node" name="transmission"/>
 </launch>
