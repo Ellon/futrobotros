@@ -48,6 +48,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   State.msg
+  Poses.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -101,6 +102,8 @@ catkin_package(
 
 ## Declare a cpp executable
 add_executable(localization_node src/localization_node.cpp)
+add_executable(strategy_node src/strategy_node.cpp)
+
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -108,6 +111,9 @@ add_executable(localization_node src/localization_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(localization_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(strategy_node
   ${catkin_LIBRARIES}
 )
 

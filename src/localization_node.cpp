@@ -8,7 +8,7 @@ ros::Publisher localization_pub;
 /** \brief Localization callback
  *
  * This callback should receive an image as a message and publish the
- * pose of the robots and the position of the ball as a tf::Transform
+ * pose of the robots and the position of the ball as a futrobotros::State
  */
 void localizationCallback(const sensor_msgs::Image::ConstPtr& msg)
 {
@@ -39,10 +39,10 @@ int main(int argc, char **argv)
 	ros::NodeHandle n;
 
 	// Subscribe to the topic with the acquired images
-	ros::Subscriber sub = n.subscribe("image_input", 1000, localizationCallback);
+	ros::Subscriber sub = n.subscribe("localization_input", 1000, localizationCallback);
 
 	// Set up ball position publisher
-	localization_pub = n.advertise<futrobotros::State>("state", 1000);
+	localization_pub = n.advertise<futrobotros::State>("localization_output", 1000);
 
 	// Spin until the end
 	ros::spin();
