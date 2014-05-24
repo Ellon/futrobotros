@@ -49,6 +49,7 @@ add_message_files(
   FILES
   State.msg
   Poses.msg
+  Controls.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -103,6 +104,8 @@ catkin_package(
 ## Declare a cpp executable
 add_executable(localization_node src/localization_node.cpp)
 add_executable(strategy_node src/strategy_node.cpp)
+add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp)
+add_executable(control_node src/control_node.cpp)
 
 
 ## Add cmake target dependencies of the executable/library
@@ -114,6 +117,12 @@ target_link_libraries(localization_node
   ${catkin_LIBRARIES}
 )
 target_link_libraries(strategy_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(obstacle_avoidance_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(control_node
   ${catkin_LIBRARIES}
 )
 
