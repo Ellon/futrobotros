@@ -1,9 +1,9 @@
 <launch>
 
-<node pkg="futrobot" type="localization_node" name="localization"/>
-<node pkg="futrobot" type="strategy_node" name="strategy"/>
-<node pkg="futrobot" type="obstacle_avoidance_node" name="obstacle_avoidance"/>
-<node pkg="futrobot" type="control_node" name="control"/>
-<node pkg="futrobot" type="transmission_node" name="transmission"/>
+<node pkg="futrobotros" type="localization_node" name="localization"/>
+<node pkg="futrobotros" type="strategy_node" name="strategy"/>
+<node pkg="futrobotros" type="obstacle_avoidance_node" name="obstacle_avoidance"/>
+<node pkg="futrobotros" type="control_node" name="control"/>
+<node pkg="futrobotros" type="transmission_node" name="transmission"/>
 
 </launch>
