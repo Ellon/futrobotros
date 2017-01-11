@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   geometry_msgs
   message_generation
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -109,6 +110,7 @@ add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp)
 add_executable(control_node src/control_node.cpp)
 add_executable(transmission_node src/transmission_node.cpp)
 add_executable(simulator_node src/simulator_node.cpp src/modelo.cpp src/campo.cpp)
+add_executable(team_pose_to_tf src/team_pose_to_tf.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -132,6 +134,9 @@ target_link_libraries(transmission_node
 )
 target_link_libraries(simulator_node
   ${catkin_LIBRARIES} futrobotros_common
+)
+target_link_libraries(team_pose_to_tf
+  ${catkin_LIBRARIES}
 )
 
 ## Specify dependencies on local messages to generate message files before compiling nodes
