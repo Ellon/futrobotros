@@ -98,9 +98,9 @@ catkin_package(
 # include_directories(include)
 
 ## Declare a cpp library
-# add_library(futrobotros
-#   src/${PROJECT_NAME}/futrobotros.cpp
-# )
+add_library(futrobotros_common
+  src/functions.cpp src/system.cpp
+)
 
 ## Declare a cpp executable
 add_executable(localization_node src/localization_node.cpp)
@@ -108,7 +108,7 @@ add_executable(strategy_node src/strategy_node.cpp)
 add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp)
 add_executable(control_node src/control_node.cpp)
 add_executable(transmission_node src/transmission_node.cpp)
-add_executable(simulator_node src/simulator_node.cpp)
+add_executable(simulator_node src/simulator_node.cpp src/modelo.cpp src/campo.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -131,7 +131,7 @@ target_link_libraries(transmission_node
   ${catkin_LIBRARIES}
 )
 target_link_libraries(simulator_node
-  ${catkin_LIBRARIES}
+  ${catkin_LIBRARIES} futrobotros_common
 )
 
 ## Specify dependencies on local messages to generate message files before compiling nodes
