@@ -108,7 +108,7 @@ add_executable(strategy_node src/strategy_node.cpp)
 add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp)
 add_executable(control_node src/control_node.cpp)
 add_executable(transmission_node src/transmission_node.cpp)
-
+add_executable(simulator_node src/simulator_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -130,6 +130,9 @@ target_link_libraries(control_node
 target_link_libraries(transmission_node
   ${catkin_LIBRARIES}
 )
+target_link_libraries(simulator_node
+  ${catkin_LIBRARIES}
+)
 
 ## Specify dependencies on local messages to generate message files before compiling nodes
 add_dependencies(localization_node futrobotros_generate_messages_cpp)
@@ -137,6 +140,7 @@ add_dependencies(strategy_node futrobotros_generate_messages_cpp)
 add_dependencies(obstacle_avoidance_node futrobotros_generate_messages_cpp)
 add_dependencies(control_node futrobotros_generate_messages_cpp)
 add_dependencies(transmission_node futrobotros_generate_messages_cpp)
+add_dependencies(simulator_node futrobotros_generate_messages_cpp)
 
 
 #############
