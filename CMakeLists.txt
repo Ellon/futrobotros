@@ -130,6 +130,14 @@ target_link_libraries(transmission_node
   ${catkin_LIBRARIES}
 )
 
+## Specify dependencies on local messages to generate message files before compiling nodes
+add_dependencies(localization_node futrobotros_generate_messages_cpp)
+add_dependencies(strategy_node futrobotros_generate_messages_cpp)
+add_dependencies(obstacle_avoidance_node futrobotros_generate_messages_cpp)
+add_dependencies(control_node futrobotros_generate_messages_cpp)
+add_dependencies(transmission_node futrobotros_generate_messages_cpp)
+
+
 #############
 ## Install ##
 #############
