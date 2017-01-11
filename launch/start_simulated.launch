@@ -1,0 +1,15 @@
+<launch>
+  <node pkg="futrobotros" type="simulator_node" name="simulator"/>
+  <node pkg="futrobotros" type="strategy_node" name="yellow_strategy">
+    <remap from="strategy_input" to="yellow_team_poses"/>
+    <remap from="strategy_output" to="yellow_team_references"/>
+  </node>
+  <node pkg="futrobotros" type="obstacle_avoidance_node" name="yellow_obstacle_avoidance">
+    <remap from="obstacle_avoidance_input" to="yellow_team_references"/>
+    <remap from="obstacle_avoidance_output" to="yellow_team_corrected_references"/>
+  </node>
+  <node pkg="futrobotros" type="control_node" name="yellow_control">
+    <remap from="control_input" to="yellow_team_corrected_references"/>
+    <remap from="control_output" to="yellow_team_pwms"/>
+  </node>
+</launch>
