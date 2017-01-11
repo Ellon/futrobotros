@@ -1,12 +1,12 @@
 #include <ros/ros.h>
-#include <futrobotros/Controls.h>
+#include <futrobotros/TeamPWM.h>
 
 /** \brief Transmission callback
  *
  * This callback should receive the control signals to be sent to the
  * robot and then access the hardware to actually send them
  */
-void transmissionCallback(const futrobotros::Controls::ConstPtr& msg)
+void transmissionCallback(const futrobotros::TeamPWM::ConstPtr& msg)
 {
 	/// \todo Substitute the next line by the function to access your hardware and realize the transmission to the robots.
 	ROS_INFO("Transmission not implemented yet!");

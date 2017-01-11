@@ -48,8 +48,9 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   State.msg
-  Poses.msg
-  Controls.msg
+  TeamPose.msg
+  TeamPWM.msg
+  RobotPWM.msg
 )
 
 ## Generate services in the 'srv' folder

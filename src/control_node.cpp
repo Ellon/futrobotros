@@ -1,32 +1,27 @@
 #include <ros/ros.h>
-#include <futrobotros/Poses.h>
-#include <futrobotros/Controls.h>
+#include <futrobotros/TeamPose.h>
+#include <futrobotros/TeamPWM.h>
 
 // Declare the publisher of the control signals
 ros::Publisher control_pub;
 
 /** \brief Control callback
  *
- * This callback should receive the reference for the robots as a futrobotros::Poses
+ * This callback should receive the reference for the robots as a futrobotros::TeamPose
  * message and publish the control signals the robots should apply to reach the
  * reference
  */
-void controlCallback(const futrobotros::Poses::ConstPtr& msg)
+void controlCallback(const futrobotros::TeamPose::ConstPtr& msg)
 {
 	/// \todo Substitute the next line by your control function.
 	ROS_INFO("Control not implemented yet!");
 
 	// Publish robot control signals
 	/// \todo Change here for values obtained from your control function
-	futrobotros::Controls control_msg;
+	futrobotros::TeamPWM control_msg;
 	for(unsigned i=0; i<3; ++i){
-		control_msg.robots[i].linear.x = 0;
-		control_msg.robots[i].linear.y = 0;
-		control_msg.robots[i].linear.z = 0; // Should be always zero since we're in a plane
-
-		control_msg.robots[i].angular.x = 0; // Should be always zero since we only have rotations in 'z'
-		control_msg.robots[i].angular.y = 0; // Should be always zero since we only have rotations in 'z'
-		control_msg.robots[i].angular.z = 0;
+		control_msg.robot_pwm[i].left = 0;
+		control_msg.robot_pwm[i].right = 0;
 	}
 
 	control_pub.publish(control_msg);
@@ -44,7 +39,7 @@ int main(int argc, char **argv)
 	ros::Subscriber sub = n.subscribe("control_input", 1000, controlCallback);
 
 	// Set up strategy publisher
-	control_pub = n.advertise<futrobotros::Controls>("control_output", 1000);
+	control_pub = n.advertise<futrobotros::TeamPWM>("control_output", 1000);
 
 	// Spin until the end
 	ros::spin();
