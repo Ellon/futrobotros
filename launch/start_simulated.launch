@@ -12,4 +12,8 @@
     <remap from="control_input" to="yellow_team_corrected_references"/>
     <remap from="control_output" to="yellow_team_pwms"/>
   </node>
+  <node pkg="futrobotros" type="team_pose_to_tf" name="yellow_broadcaster">
+    <remap from="team_pose" to="yellow_team_poses"/>
+  </node>
+
 </launch>
