@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 
-#include <geometry_msgs/Point.h>
+#include <geometry_msgs/PointStamped.h>
 
 #include <futrobotros/TeamPose.h>
 #include <futrobotros/TeamPWM.h>
@@ -100,6 +100,8 @@ void simulate()
 				minhaSit.pos.amrl[i].theta() = ang_equiv(minhaSit.pos.amrl[i].theta());
 			}
 			
+			ros::Time t = ros::Time::now();
+
 			futrobotros::TeamPose msg;
 			for (int i = 0; i < 3; i++) {
 				msg.robot_pose[i].x = minhaSit.pos.azul[i].x();
@@ -114,6 +116,14 @@ void simulate()
 				msg.robot_pose[i].theta = minhaSit.pos.amrl[i].theta();
 			}
 			yellow_team_poses_pub.publish(msg);
+
+			geometry_msgs::PointStamped ball_msg;
+			ball_msg.header.frame_id = "origin";
+			ball_msg.header.stamp = t;
+			// ball_msg.header.seq = ??;
+			ball_msg.point.x = minhaSit.pos.bola.x();
+			ball_msg.point.y = minhaSit.pos.bola.y();
+			ball_pub.publish(ball_msg);
 
 			damostr -= T_AMOSTR;
 			minhaSit.id++;  // id do quadrado gerado
@@ -161,7 +171,7 @@ int main(int argc, char **argv)
 	// Set up topics to publish simulated data
 	yellow_team_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/team_poses", 1000);
 	blue_team_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/team_poses", 1000);
-	ball_pub = n.advertise<geometry_msgs::Point>("ball_position", 1000);
+	ball_pub = n.advertise<geometry_msgs::PointStamped>("ball_position", 1000);
 
 	// Subscribe to the topic with the acquired images
 	ros::Subscriber sub_yellow_team_control = n.subscribe(yellow_ns + "/team_pwms", 1000, yellowTeamControlCallback);
