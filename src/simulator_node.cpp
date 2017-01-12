@@ -15,7 +15,9 @@
 #define T_AMOSTR 0.033
 
 ros::Publisher yellow_team_poses_pub;
+ros::Publisher yellow_opponent_poses_pub;
 ros::Publisher blue_team_poses_pub;
+ros::Publisher blue_opponent_poses_pub;
 ros::Publisher ball_pub;
 
 static Modelo est; 
@@ -102,21 +104,29 @@ void simulate()
 			
 			ros::Time t = ros::Time::now();
 
-			futrobotros::TeamPose msg;
+			// compose team messages
+			futrobotros::TeamPose blue_msg;
 			for (int i = 0; i < 3; i++) {
-				msg.robot_pose[i].x = minhaSit.pos.azul[i].x();
-				msg.robot_pose[i].y = minhaSit.pos.azul[i].y();
-				msg.robot_pose[i].theta = minhaSit.pos.azul[i].theta();
+				blue_msg.robot_pose[i].x = minhaSit.pos.azul[i].x();
+				blue_msg.robot_pose[i].y = minhaSit.pos.azul[i].y();
+				blue_msg.robot_pose[i].theta = minhaSit.pos.azul[i].theta();
 			}
-			blue_team_poses_pub.publish(msg);
-
+			futrobotros::TeamPose yellow_msg;
 			for (int i = 0; i < 3; i++) {
-				msg.robot_pose[i].x = minhaSit.pos.amrl[i].x();
-				msg.robot_pose[i].y = minhaSit.pos.amrl[i].y();
-				msg.robot_pose[i].theta = minhaSit.pos.amrl[i].theta();
+				yellow_msg.robot_pose[i].x = minhaSit.pos.amrl[i].x();
+				yellow_msg.robot_pose[i].y = minhaSit.pos.amrl[i].y();
+				yellow_msg.robot_pose[i].theta = minhaSit.pos.amrl[i].theta();
 			}
-			yellow_team_poses_pub.publish(msg);
 
+			// publish messages for the blue team
+			blue_team_poses_pub.publish(blue_msg);
+			blue_opponent_poses_pub.publish(yellow_msg);
+
+			// publish messages for the yellow team
+			yellow_team_poses_pub.publish(yellow_msg);
+			yellow_opponent_poses_pub.publish(blue_msg);
+
+			// compose ball msg and publish
 			geometry_msgs::PointStamped ball_msg;
 			ball_msg.header.frame_id = "origin";
 			ball_msg.header.stamp = t;
@@ -170,7 +180,9 @@ int main(int argc, char **argv)
 
 	// Set up topics to publish simulated data
 	yellow_team_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/team_poses", 1000);
+	yellow_opponent_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/opponent_poses", 1000);
 	blue_team_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/team_poses", 1000);
+	blue_opponent_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/opponent_poses", 1000);
 	ball_pub = n.advertise<geometry_msgs::PointStamped>("ball_position", 1000);
 
 	// Subscribe to the topic with the acquired images
