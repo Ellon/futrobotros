@@ -20,8 +20,8 @@ void controlCallback(const futrobotros::TeamPose::ConstPtr& msg)
 	/// \todo Change here for values obtained from your control function
 	futrobotros::TeamPWM control_msg;
 	for(unsigned i=0; i<3; ++i){
-		control_msg.robot_pwm[i].left = 0;
-		control_msg.robot_pwm[i].right = 0;
+		control_msg.robot_pwm[i].left = 0.5;
+		control_msg.robot_pwm[i].right = 0.7;
 	}
 
 	control_pub.publish(control_msg);
