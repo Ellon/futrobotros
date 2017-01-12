@@ -6,7 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-      Splitter Ratio: 0.5
+        - /TF1/Status1
+      Splitter Ratio: 0.674157
     Tree Height: 766
   - Class: rviz/Selection
     Name: Selection
@@ -45,21 +46,39 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 15
+      Plane Cell Count: 17
       Reference Frame: <Fixed Frame>
       Value: true
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
       Frames:
+        /blue_robot0:
+          Value: true
+        /blue_robot1:
+          Value: true
+        /blue_robot2:
+          Value: true
+        /yellow_robot0:
+          Value: true
+        /yellow_robot1:
+          Value: true
+        /yellow_robot2:
+          Value: true
         All Enabled: true
+        blue_robot0:
+          Value: true
+        blue_robot1:
+          Value: true
+        blue_robot2:
+          Value: true
         origin:
           Value: true
-        robot0:
+        yellow_robot0:
           Value: true
-        robot1:
+        yellow_robot1:
           Value: true
-        robot2:
+        yellow_robot2:
           Value: true
       Marker Scale: 0.375
       Name: TF
@@ -68,11 +87,29 @@ Visualization Manager:
       Show Names: true
       Tree:
         origin:
-          robot0:
+          /blue_robot0:
             {}
-          robot1:
+          /blue_robot1:
             {}
-          robot2:
+          /blue_robot2:
+            {}
+          /yellow_robot0:
+            {}
+          /yellow_robot1:
+            {}
+          /yellow_robot2:
+            {}
+          blue_robot0:
+            {}
+          blue_robot1:
+            {}
+          blue_robot2:
+            {}
+          yellow_robot0:
+            {}
+          yellow_robot1:
+            {}
+          yellow_robot2:
             {}
       Update Interval: 0
       Value: true
@@ -130,5 +167,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: -2
+  X: 0
   Y: 0
