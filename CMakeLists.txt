@@ -100,7 +100,7 @@ catkin_package(
 
 ## Declare a cpp library
 add_library(futrobotros_common
-  src/functions.cpp src/system.cpp
+  src/functions.cpp src/system.cpp src/futdata.cpp
 )
 
 ## Declare a cpp executable
