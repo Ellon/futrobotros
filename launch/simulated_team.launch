@@ -1,4 +1,10 @@
 <launch>
+  <arg name="team"/>
+  <arg name="side"/>
+
+  <param name="team" type="string" value="$(arg team)" />
+  <param name="side" type="string" value="$(arg side)" />
+
   <node pkg="futrobotros" type="strategy_node" name="strategy">
     <remap from="strategy_input" to="team_poses"/>
     <remap from="strategy_output" to="team_references"/>

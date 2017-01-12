@@ -1,5 +1,11 @@
 <launch>
   <node pkg="futrobotros" type="simulator_node" name="simulator"/>
-  <include file="$(find futrobotros)/launch/simulated_team.launch" ns="yellow" />
-  <include file="$(find futrobotros)/launch/simulated_team.launch" ns="blue" />
+  <include file="$(find futrobotros)/launch/simulated_team.launch" ns="yellow" >
+    <arg name="team" value="YELLOW_TEAM" />
+    <arg name="side" value="RIGHT_SIDE" />
+  </include>
+  <include file="$(find futrobotros)/launch/simulated_team.launch" ns="blue" >
+    <arg name="team" value="BLUE_TEAM" />
+    <arg name="side" value="LEFT_SIDE" />
+  </include>
 </launch>
