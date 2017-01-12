@@ -1,0 +1,16 @@
+Algumas anotações importantes para portar o futebol de robos pro ROS:
+
+- "myTeam" só é importante pro acquisition
+
+- gameMode não deve ser importante, visto que o sistema deve ser o mesmo se real ou simulado.
+
+- mySide é importante pra strategy e obstacles, e deve ser setado a partir de um rosparam.
+
+- gameState tb só é importante pra strategy e obstacles. Mas deve ser possivel setar o modo de jogo usando parametros (talvez com dynamic_reconfigure?)
+
+- gameState tem que poder ser setado através de uma interface.
+
+- bloqueado é setado pela estratégia, e usado no controle. Como informar isso? rosparam? Mesma pergunta relativa a variável bypassControl.
+
+- id_pos pode ser setado pela sequencia da msg.
+
