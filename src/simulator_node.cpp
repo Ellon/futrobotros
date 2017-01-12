@@ -149,18 +149,23 @@ int main(int argc, char **argv)
 {
 	// Init ROS
 	ros::init(argc, argv, "simulator");
-
+	
 	// Init a node handler
 	ros::NodeHandle n;
 
+	// Get namespace parameters
+	std::string yellow_ns, blue_ns;
+	n.param<std::string>("yellow_ns", yellow_ns, "yellow");
+	n.param<std::string>("blue_ns", blue_ns, "blue");
+
 	// Set up topics to publish simulated data
-	yellow_team_poses_pub = n.advertise<futrobotros::TeamPose>("yellow_team_poses", 1000);
-	blue_team_poses_pub = n.advertise<futrobotros::TeamPose>("blue_team_poses", 1000);
+	yellow_team_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/team_poses", 1000);
+	blue_team_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/team_poses", 1000);
 	ball_pub = n.advertise<geometry_msgs::Point>("ball_position", 1000);
 
 	// Subscribe to the topic with the acquired images
-	ros::Subscriber sub_yellow_team_control = n.subscribe("yellow_team_pwms", 1000, yellowTeamControlCallback);
-	ros::Subscriber sub_blue_team_control = n.subscribe("blue_team_pwms", 1000, blueTeamControlCallback);
+	ros::Subscriber sub_yellow_team_control = n.subscribe(yellow_ns + "/team_pwms", 1000, yellowTeamControlCallback);
+	ros::Subscriber sub_blue_team_control = n.subscribe(blue_ns + "/team_pwms", 1000, blueTeamControlCallback);
 
 	// Start the simulation, returns only when finished.
 	simulate();
