@@ -27,4 +27,8 @@
     <param name="prefix" type="string" value="ref" />
     <remap from="team_poses_input" to="team_references"/>
   </node>
+  <node pkg="futrobotros" type="team_pose_to_tf" name="corr_ref_tf_broadcaster">
+    <param name="prefix" type="string" value="corr_ref" />
+    <remap from="team_poses_input" to="team_corrected_references"/>
+  </node>
 </launch>
