@@ -6,6 +6,7 @@ project(futrobotros)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  std_msgs
   sensor_msgs
   geometry_msgs
   message_generation
@@ -72,6 +73,7 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   geometry_msgs
+  std_msgs
 )
 
 ###################################
