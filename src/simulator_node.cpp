@@ -106,12 +106,18 @@ void simulate()
 
 			// compose team messages
 			futrobotros::TeamPose blue_msg;
+			blue_msg.header.stamp = t;
+			// blue_msg.header.seq = ?;
+			blue_msg.header.frame_id = "origin";
 			for (int i = 0; i < 3; i++) {
 				blue_msg.robot_pose[i].x = minhaSit.pos.azul[i].x();
 				blue_msg.robot_pose[i].y = minhaSit.pos.azul[i].y();
 				blue_msg.robot_pose[i].theta = minhaSit.pos.azul[i].theta();
 			}
 			futrobotros::TeamPose yellow_msg;
+			yellow_msg.header.stamp = t;
+			// yellow_msg.header.seq = ?;
+			yellow_msg.header.frame_id = "origin";
 			for (int i = 0; i < 3; i++) {
 				yellow_msg.robot_pose[i].x = minhaSit.pos.amrl[i].x();
 				yellow_msg.robot_pose[i].y = minhaSit.pos.amrl[i].y();
@@ -128,9 +134,9 @@ void simulate()
 
 			// compose ball msg and publish
 			geometry_msgs::PointStamped ball_msg;
-			ball_msg.header.frame_id = "origin";
 			ball_msg.header.stamp = t;
 			// ball_msg.header.seq = ??;
+			ball_msg.header.frame_id = "origin";
 			ball_msg.point.x = minhaSit.pos.bola.x();
 			ball_msg.point.y = minhaSit.pos.bola.y();
 			ball_pub.publish(ball_msg);
@@ -179,15 +185,15 @@ int main(int argc, char **argv)
 	n.param<std::string>("blue_ns", blue_ns, "blue");
 
 	// Set up topics to publish simulated data
-	yellow_team_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/team_poses", 1000);
-	yellow_opponent_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/opponent_poses", 1000);
-	blue_team_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/team_poses", 1000);
-	blue_opponent_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/opponent_poses", 1000);
-	ball_pub = n.advertise<geometry_msgs::PointStamped>("ball_position", 1000);
+	yellow_team_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/team_poses", 10);
+	yellow_opponent_poses_pub = n.advertise<futrobotros::TeamPose>(yellow_ns + "/opponent_poses", 10);
+	blue_team_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/team_poses", 10);
+	blue_opponent_poses_pub = n.advertise<futrobotros::TeamPose>(blue_ns + "/opponent_poses", 10);
+	ball_pub = n.advertise<geometry_msgs::PointStamped>("ball_position", 10);
 
 	// Subscribe to the topic with the acquired images
-	ros::Subscriber sub_yellow_team_control = n.subscribe(yellow_ns + "/team_pwms", 1000, yellowTeamControlCallback);
-	ros::Subscriber sub_blue_team_control = n.subscribe(blue_ns + "/team_pwms", 1000, blueTeamControlCallback);
+	ros::Subscriber sub_yellow_team_control = n.subscribe(yellow_ns + "/team_pwms", 10, yellowTeamControlCallback);
+	ros::Subscriber sub_blue_team_control = n.subscribe(blue_ns + "/team_pwms", 10, blueTeamControlCallback);
 
 	// Start the simulation, returns only when finished.
 	simulate();
