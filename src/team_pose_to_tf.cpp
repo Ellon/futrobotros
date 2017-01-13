@@ -8,9 +8,9 @@
 
 using namespace std;
 
-std::string my_namespace;
+std::string my_namespace, prefix;
 
-void teamPoseCallback(const futrobotros::TeamPose::ConstPtr& msg){
+void teamPoseCallback(const futrobotros::TeamPose::ConstPtr& msg) {
   static tf::TransformBroadcaster br;
   tf::Transform transform;
   for (int i = 0; i < 3; i++) {
@@ -19,22 +19,26 @@ void teamPoseCallback(const futrobotros::TeamPose::ConstPtr& msg){
     q.setRPY(0, 0, msg->robot_pose[i].theta);
     transform.setRotation(q);
     ostringstream oss;
-    oss << my_namespace << "_robot" << i;
+    oss << my_namespace << "_" << prefix << "_" << i;
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "origin", oss.str()));
   }
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
   ros::init(argc, argv, "team_pose_tf_broadcaster");
 
-  ros::NodeHandle node;
+  ros::NodeHandle n;
 
+  // recover current namespace
   my_namespace = ros::this_node::getNamespace();
-  
-  if(my_namespace[0] == '/')
+  if (my_namespace[0] == '/')
     my_namespace.erase(0, 1); // remove leading slash
 
-  ros::Subscriber sub = node.subscribe("team_pose", 10, &teamPoseCallback);
+  // recover prefix from the private parameter
+  ros::NodeHandle pn("~"); // node to recover private parameters
+  pn.param<std::string>("prefix", prefix, "");
+
+  ros::Subscriber sub = n.subscribe("team_poses_input", 10, &teamPoseCallback);
 
   ros::spin();
   return 0;
