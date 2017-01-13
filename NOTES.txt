@@ -25,3 +25,7 @@ Algumas anotações importantes para portar o futebol de robos pro ROS:
 - Correção de distorção visual e homografia é feita nas funções "calculaMinhaPose" em acquisition.
 
 - localization corrige a posição dos robôs e da bola. Necessário pq as marcas dos robôs estão em um plano acima do plano do campo.
+
+- as constantes do controlador devem ser setadas através de parametros, talvez usando dynamic reconfigure?
+
+- Lidar propriamente com POSITION_UNDEFINED (provavelmente eliminar, e achar uma alternativa)
