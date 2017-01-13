@@ -15,6 +15,8 @@ ros::Publisher references_pub;
 ros::Publisher bypass_control_pub;
 ros::Publisher blocked_pub;
 
+// Pointer to strategy object. Global to provide access from the strategyCallback
+// \todo This workaround is ugly. Change it to a class.
 Strategy * p_strategy;
 
 /** \brief Strategy callback
@@ -53,8 +55,6 @@ void strategyCallback(
 	// Recover references and convert to msg
 	REFERENCES ref;
 	p_strategy->get_ref(ref);
-
-	/// \todo Change here for values obtained from your strategy
 	futrobotros::TeamPose reference_msg;
 	reference_msg.header.stamp = team_msg->header.stamp;
 	// reference_msg.header.seq = team_msg->header.seq;
