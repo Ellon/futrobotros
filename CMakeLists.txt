@@ -114,7 +114,7 @@ add_library(futrobotros_common
 add_executable(localization_node src/localization_node.cpp)
 add_executable(strategy_node src/strategy_node.cpp src/strategy.cpp)
 add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp)
-add_executable(control_node src/control_node.cpp)
+add_executable(control_node src/control_node.cpp src/control.cpp)
 add_executable(transmission_node src/transmission_node.cpp)
 add_executable(simulator_node src/simulator_node.cpp src/modelo.cpp src/campo.cpp)
 add_executable(team_pose_to_tf src/team_pose_to_tf.cpp)
@@ -135,7 +135,7 @@ target_link_libraries(obstacle_avoidance_node
   ${catkin_LIBRARIES}
 )
 target_link_libraries(control_node
-  ${catkin_LIBRARIES}
+  ${catkin_LIBRARIES} futrobotros_common
 )
 target_link_libraries(transmission_node
   ${catkin_LIBRARIES}
