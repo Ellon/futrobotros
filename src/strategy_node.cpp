@@ -1,9 +1,10 @@
 #include <ros/ros.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
-#include <futrobotros/State.h>
-#include <futrobotros/TeamPose.h>
 #include <geometry_msgs/PointStamped.h>
+
+#include <futrobotros/BallVelocity.h>
+#include <futrobotros/TeamPose.h>
 
 #include "strategy.h"
 
@@ -18,7 +19,9 @@ Strategy * p_strategy;
 void strategyCallback(
 	const futrobotros::TeamPose::ConstPtr& team_msg,
 	const futrobotros::TeamPose::ConstPtr& opponent_msg,
-	const geometry_msgs::PointStamped::ConstPtr& ball_msg)
+	const geometry_msgs::PointStamped::ConstPtr& ball_msg,
+	const geometry_msgs::PointStamped::ConstPtr& future_ball_msg,
+	const futrobotros::BallVelocity::ConstPtr& vel_ball_msg)
 {
 	// Store msgs in a CONFIG variable
 	CONFIG pos;
@@ -32,10 +35,10 @@ void strategyCallback(
 	}
 	pos.ball.x() = ball_msg->point.x;
 	pos.ball.y() = ball_msg->point.y;
-	pos.future_ball.x() = ball_msg->point.x; // \todo Change that.
-	pos.future_ball.y() = ball_msg->point.y; // \todo Change that.
-	pos.vel_ball.mod = 0.0;
-	pos.vel_ball.ang = 0.0;
+	pos.future_ball.x() = future_ball_msg->point.x;
+	pos.future_ball.y() = future_ball_msg->point.y;
+	pos.vel_ball.mod = vel_ball_msg->module;
+	pos.vel_ball.ang = vel_ball_msg->angle;
 
 	// Set new pos and process strategy
 	p_strategy->set_pos(pos);
@@ -76,15 +79,18 @@ int main(int argc, char **argv)
 	p_strategy = &strategy;
 
 	// Declare subscribers using message_filters for synchronization
-	message_filters::Subscriber<futrobotros::TeamPose> team_pose_sub(n, "team_poses", 1000);
-	message_filters::Subscriber<futrobotros::TeamPose> opponent_pose_sub(n, "opponent_poses", 1000);
-	message_filters::Subscriber<geometry_msgs::PointStamped> ball_position_sub(n, "ball_position", 1000);
+	message_filters::Subscriber<futrobotros::TeamPose> team_pose_sub(n, "team_poses", 10);
+	message_filters::Subscriber<futrobotros::TeamPose> opponent_pose_sub(n, "opponent_poses", 10);
+	message_filters::Subscriber<geometry_msgs::PointStamped> ball_position_sub(n, "ball_position", 10);
+	message_filters::Subscriber<geometry_msgs::PointStamped> future_ball_position_sub(n, "future_ball_position", 10);
+	message_filters::Subscriber<futrobotros::BallVelocity> ball_velocity_sub(n, "ball_velocity", 10);
 	// Synchronize and register the callback
-	message_filters::TimeSynchronizer<futrobotros::TeamPose, futrobotros::TeamPose, geometry_msgs::PointStamped> sync(team_pose_sub, opponent_pose_sub, ball_position_sub, 10);
-	sync.registerCallback(boost::bind(&strategyCallback, _1, _2, _3));
- 
+	message_filters::TimeSynchronizer<futrobotros::TeamPose, futrobotros::TeamPose, geometry_msgs::PointStamped, geometry_msgs::PointStamped, futrobotros::BallVelocity>
+		sync(team_pose_sub, opponent_pose_sub, ball_position_sub, future_ball_position_sub, ball_velocity_sub, 10);
+	sync.registerCallback(boost::bind(&strategyCallback, _1, _2, _3, _4, _5));
+
 	// Set up strategy publisher
-	strategy_pub = n.advertise<futrobotros::TeamPose>("strategy_output", 1000);
+	strategy_pub = n.advertise<futrobotros::TeamPose>("strategy_output", 10);
 
 	// Spin until the end
 	ros::spin();
