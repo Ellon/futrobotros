@@ -14,7 +14,6 @@ using namespace std;
 
 // \todo Change these defines to somewhere else.
 #define TEMPO_BOLA_FUTURA 0.1
-#define DT_AMOSTR_INICIAL 1.0/30.0 
 
 // Declare publisher for localization result
 ros::Publisher future_ball_position_pub;
@@ -29,13 +28,12 @@ POS_BOLA last_ball;
  */
 void ballPositionCallback(const geometry_msgs::PointStamped::ConstPtr& msg)
 {
-	/// \todo Substitute the next line by your image processing functions.
-	ROS_INFO("Localization not implemented yet!");
-
 	POS_BOLA ball;
 	ball.x() = msg->point.x;
 	ball.y() = msg->point.y;
 
+	// Workaround while the dt_amostr is not properly computed. The same
+	// variable is also used in the control.
 	double dt_amostr = DT_AMOSTR_INICIAL;
 
 	//**********************************************************

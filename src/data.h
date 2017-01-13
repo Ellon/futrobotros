@@ -20,6 +20,8 @@
 #define POSITION_UNDEFINED -9999 /**< \brief Valor que indica uma
 				    posição indefinida no campo*/
 
+#define DT_AMOSTR_INICIAL 1.0/30.0 
+
 //Se voce so quiser usar o simulador, pode descomentar a linha abaixo
 //e nao sera necessario instalar as bibliotecas de acesso a camera
 //firewire e de acesso ao dispositivo USB-Serial
