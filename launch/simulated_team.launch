@@ -11,13 +11,12 @@
   </node>
   <node pkg="futrobotros" type="strategy_node" name="strategy">
     <remap from="ball_position" to="$(arg ball_topic)"/>
-    <remap from="strategy_output" to="team_references"/>
   </node>
-<!--   <node pkg="futrobotros" type="obstacle_avoidance_node" name="obstacle_avoidance">
-    <remap from="obstacle_avoidance_input" to="team_references"/>
-    <remap from="obstacle_avoidance_output" to="team_corrected_references"/>
-  </node> -->
+  <node pkg="futrobotros" type="obstacle_avoidance_node" name="obstacle_avoidance">
+    <remap from="ball_position" to="$(arg ball_topic)"/>
+  </node>
   <node pkg="futrobotros" type="control_node" name="control">
+    <remap from="team_references" to="team_corrected_references"/>    
   </node>
 
   <node pkg="futrobotros" type="team_pose_to_tf" name="team_tf_broadcaster">
