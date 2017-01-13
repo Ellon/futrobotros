@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   geometry_msgs
+  visualization_msgs
   message_generation
   tf
 )
@@ -74,6 +75,7 @@ generate_messages(
   DEPENDENCIES
   geometry_msgs
   std_msgs
+  visualization_msgs
 )
 
 ###################################
@@ -113,6 +115,7 @@ add_executable(control_node src/control_node.cpp)
 add_executable(transmission_node src/transmission_node.cpp)
 add_executable(simulator_node src/simulator_node.cpp src/modelo.cpp src/campo.cpp)
 add_executable(team_pose_to_tf src/team_pose_to_tf.cpp)
+add_executable(field_visualization src/field_visualization.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -138,6 +141,9 @@ target_link_libraries(simulator_node
   ${catkin_LIBRARIES} futrobotros_common
 )
 target_link_libraries(team_pose_to_tf
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(field_visualization
   ${catkin_LIBRARIES}
 )
 
