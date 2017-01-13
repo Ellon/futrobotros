@@ -1,12 +1,17 @@
 <launch>
+  <!-- Simulator -->
   <node pkg="futrobotros" type="simulator_node" name="simulator"/>
+  <!-- Field display in rviz -->
   <node pkg="futrobotros" type="field_visualization" name="field_visualization"/>
 
+  <!-- Launch each team in a different namespace -->
+  <!-- yellow namespace-->
   <include file="$(find futrobotros)/launch/simulated_team.launch" ns="yellow" >
     <arg name="team" value="YELLOW_TEAM" />
     <arg name="side" value="RIGHT_SIDE" />
     <arg name="ball_topic" value="/ball_position" />
   </include>
+  <!-- blue namespace -->
   <include file="$(find futrobotros)/launch/simulated_team.launch" ns="blue" >
     <arg name="team" value="BLUE_TEAM" />
     <arg name="side" value="LEFT_SIDE" />
