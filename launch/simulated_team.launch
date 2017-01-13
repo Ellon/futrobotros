@@ -6,6 +6,9 @@
   <param name="team" type="string" value="$(arg team)" />
   <param name="side" type="string" value="$(arg side)" />
 
+  <node pkg="futrobotros" type="localization_node" name="localization">
+    <remap from="ball_position" to="$(arg ball_topic)"/>
+  </node>
   <node pkg="futrobotros" type="strategy_node" name="strategy">
     <remap from="ball_position" to="$(arg ball_topic)"/>
     <remap from="strategy_output" to="team_references"/>
