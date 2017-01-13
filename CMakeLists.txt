@@ -157,6 +157,7 @@ add_dependencies(obstacle_avoidance_node futrobotros_generate_messages_cpp)
 add_dependencies(control_node futrobotros_generate_messages_cpp)
 add_dependencies(transmission_node futrobotros_generate_messages_cpp)
 add_dependencies(simulator_node futrobotros_generate_messages_cpp)
+add_dependencies(team_pose_to_tf futrobotros_generate_messages_cpp)
 
 
 #############
