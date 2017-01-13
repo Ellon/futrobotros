@@ -1,33 +1,97 @@
+#include <iostream>
+
 #include <ros/ros.h>
-#include <sensor_msgs/Image.h>
-#include <futrobotros/State.h>
+#include <geometry_msgs/PointStamped.h>
+
+#include <futrobotros/TeamPose.h>
+
+#include "data.h"
+#include "functions.h"
+#include "parameters.h"
+
+using namespace std;
+
+// \todo Change these defines to somewhere else.
+#define TEMPO_BOLA_FUTURA 0.1
+#define DT_AMOSTR_INICIAL 1.0/30.0 
 
 // Declare publisher for localization result
-ros::Publisher localization_pub;
+ros::Publisher future_ball_position_pub;
+
+POS_BOLA last_ball;
 
 /** \brief Localization callback
  *
  * This callback should receive an image as a message and publish the
  * pose of the robots and the position of the ball as a futrobotros::State
  */
-void localizationCallback(const sensor_msgs::Image::ConstPtr& msg)
+void ballPositionCallback(const geometry_msgs::PointStamped::ConstPtr& msg)
 {
 	/// \todo Substitute the next line by your image processing functions.
-	ROS_INFO("Image processing not implemented yet!");
+	ROS_INFO("Localization not implemented yet!");
 
-	// Publish localization result as a state message
-	/// \todo Change here for values obtained from your image processing
-	futrobotros::State state_msg;
-	for(unsigned i=0; i<3; ++i){
-		state_msg.robots[i].x = 0;
-		state_msg.robots[i].y = 0;
-		state_msg.robots[i].theta = 0;
+	POS_BOLA ball;
+	ball.x() = msg->point.x;
+	ball.y() = msg->point.y;
+
+	double dt_amostr = DT_AMOSTR_INICIAL;
+
+	//**********************************************************
+	//********** CALCULO DA VELOCIDADE DA BOLA *****************
+	//**********************************************************
+	double vbola, thetabola;
+	VELOCITY vel_ball;
+	if (ball.x() != POSITION_UNDEFINED && ball.y() != POSITION_UNDEFINED) {
+		vbola = hypot(ball.y() - last_ball.y(),
+		              ball.x() - last_ball.x()) / dt_amostr;
+		thetabola = arc_tang(ball.y() - last_ball.y(),
+		                     ball.x() - last_ball.x());
+		if (vbola > VEL_BOLA_PARADA) {
+			vel_ball.mod = (vel_ball.mod + vbola) / 2.0;
+			vel_ball.ang = (vel_ball.ang + thetabola) / 2.0;
+		}
+		else {
+			vel_ball.mod = vel_ball.mod / 2.0;
+			vel_ball.ang  = 0.0;
+		}
 	}
-	state_msg.ball.x = 0;
-	state_msg.ball.y = 0;
-	state_msg.ball.z = 0;
+	else {
+		ball = last_ball;
+		vel_ball.mod = 0.0;
+		vel_ball.ang = 0.0;
+	}
+	if (isnan(ball.x()) || isnan(ball.y())) {
+		cerr << "POS ATUAL DA BOLA EH NAN!!! "
+		     << __FILE__ << " " << __LINE__ << endl;
+	}
+	if (isnan(vel_ball.mod) || isnan(vel_ball.ang)) {
+		cerr << "VELOCIDADE DA BOLA EH NAN!!! "
+		     << __FILE__ << " " << __LINE__ << endl;
+	}
 
-	localization_pub.publish(state_msg);
+	POS_BOLA future_ball;
+	future_ball.x() = ball.x() + vel_ball.mod * cos(vel_ball.ang) * TEMPO_BOLA_FUTURA;
+	future_ball.y() = ball.y() + vel_ball.mod * sin(vel_ball.ang) * TEMPO_BOLA_FUTURA;
+
+	if (isnan(future_ball.x()) || isnan(future_ball.y())) {
+		cerr << "POS_FUT DA BOLA EH NAN!!! "
+		     << __FILE__ << " " << __LINE__ << endl;
+		cerr << "\t" << ball.x() << " " << ball.y() << " "
+		     << vel_ball.mod << " " << vel_ball.ang << " "
+		     << future_ball.x() << " " << future_ball.y() << endl;
+	}
+
+	// Publish future ball position
+	geometry_msgs::PointStamped future_ball_msg;
+	future_ball_msg.header.stamp = msg->header.stamp;
+	// future_ball_msg.header.seq = msg->header.seq;
+	future_ball_msg.header.frame_id = msg->header.frame_id;
+	future_ball_msg.point.x = future_ball.x();
+	future_ball_msg.point.y = future_ball.y();
+
+	future_ball_position_pub.publish(future_ball_msg);
+
+	last_ball = ball;
 }
 
 int main(int argc, char **argv)
@@ -38,11 +102,14 @@ int main(int argc, char **argv)
 	// Init a node handler
 	ros::NodeHandle n;
 
-	// Subscribe to the topic with the acquired images
-	ros::Subscriber sub = n.subscribe("localization_input", 1000, localizationCallback);
+	last_ball.x() = 0.0;
+	last_ball.y() = 0.0;
 
-	// Set up ball position publisher
-	localization_pub = n.advertise<futrobotros::State>("localization_output", 1000);
+	// Subscribe to the topic with the acquired images
+	ros::Subscriber ball_position_sub = n.subscribe("ball_position", 10, ballPositionCallback);
+
+	// Set future ball position publisher
+	future_ball_position_pub = n.advertise<geometry_msgs::PointStamped>("future_ball_position", 10);
 
 	// Spin until the end
 	ros::spin();
