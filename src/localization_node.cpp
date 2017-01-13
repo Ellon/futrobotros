@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/PointStamped.h>
 
+#include <futrobotros/BallVelocity.h>
 #include <futrobotros/TeamPose.h>
 
 #include "data.h"
@@ -17,6 +18,7 @@ using namespace std;
 
 // Declare publisher for localization result
 ros::Publisher future_ball_position_pub;
+ros::Publisher ball_velocity_pub;
 
 POS_BOLA last_ball;
 
@@ -91,6 +93,15 @@ void ballPositionCallback(const geometry_msgs::PointStamped::ConstPtr& msg)
 
 	future_ball_position_pub.publish(future_ball_msg);
 
+	// Publish ball velocity
+	futrobotros::BallVelocity ball_velocity_msg;
+	ball_velocity_msg.header.stamp = msg->header.stamp;
+	// ball_velocity_msg.header.seq = msg->header.seq;
+	ball_velocity_msg.header.frame_id = msg->header.frame_id;
+	ball_velocity_msg.module = vel_ball.mod;
+	ball_velocity_msg.angle = vel_ball.ang;
+	ball_velocity_pub.publish(ball_velocity_msg);
+
 	last_ball = ball;
 }
 
@@ -110,6 +121,7 @@ int main(int argc, char **argv)
 
 	// Set future ball position publisher
 	future_ball_position_pub = n.advertise<geometry_msgs::PointStamped>("future_ball_position", 10);
+	ball_velocity_pub = n.advertise<futrobotros::BallVelocity>("ball_velocity", 10);
 
 	// Spin until the end
 	ros::spin();
