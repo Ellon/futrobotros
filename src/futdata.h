@@ -18,7 +18,7 @@
  * \todo Fazer o valor to tempo inicial ser calculado automaticamente
  * de acordo com o frame rate da camera utilizada.
  */
-#define DT_AMOSTR_INICIAL 1.0/30.0 
+// #define DT_AMOSTR_INICIAL 1.0/30.0 
 
 /** \brief Classe de comunicação entre as subclasses do Futebol de Robôs
  * 
