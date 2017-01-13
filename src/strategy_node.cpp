@@ -9,7 +9,7 @@
 #include "strategy.h"
 
 // Declare the robot poses publishers
-ros::Publisher strategy_pub;
+ros::Publisher references_pub;
 Strategy * p_strategy;
 /** \brief Strategy callback
  *
@@ -60,7 +60,7 @@ void strategyCallback(
 	}
 
 	// Publish team reference msg
-	strategy_pub.publish(reference_msg);
+	references_pub.publish(reference_msg);
 }
 
 int main(int argc, char **argv)
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 	sync.registerCallback(boost::bind(&strategyCallback, _1, _2, _3, _4, _5));
 
 	// Set up strategy publisher
-	strategy_pub = n.advertise<futrobotros::TeamPose>("strategy_output", 10);
+	references_pub = n.advertise<futrobotros::TeamPose>("team_references", 10);
 
 	// Spin until the end
 	ros::spin();
