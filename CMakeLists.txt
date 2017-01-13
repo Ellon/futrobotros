@@ -55,6 +55,8 @@ add_message_files(
   TeamPWM.msg
   RobotPWM.msg
   BallVelocity.msg
+  TeamBypassControl.msg
+  TeamBlocked.msg
 )
 
 ## Generate services in the 'srv' folder
