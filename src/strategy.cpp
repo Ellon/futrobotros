@@ -1877,3 +1877,18 @@ PWM_WHEEL Strategy::descolar_parede (int id) {
   }
   return ret; 
 }
+
+void Strategy::get_bypass_control(bool bypass_control_out[3], PWM_ROBOTS& pwm_out)
+{
+  for(int i=0; i < 3; i++)
+    bypass_control_out[i] = bypassControl[i];
+
+  pwm_out = pwm;
+}
+
+void Strategy::get_bloqueado(bool bloqueado_out[3])
+{
+  for(int i=0; i < 3; i++)
+    bloqueado_out[i] = bloqueado[i];
+}
+

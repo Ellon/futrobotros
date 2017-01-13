@@ -206,6 +206,8 @@ public:
   ~Strategy();
   inline void set_pos(const CONFIG& new_pos){pos = new_pos;}
   inline void get_ref(REFERENCES& ref_out){ref_out = ref;}
+  void get_bypass_control(bool bypass_control_out[3], PWM_ROBOTS& pwm_out);
+  void get_bloqueado(bool bloqueado_out[3]);
   bool strategy();
 
 };
