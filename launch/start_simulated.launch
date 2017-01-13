@@ -3,9 +3,11 @@
   <include file="$(find futrobotros)/launch/simulated_team.launch" ns="yellow" >
     <arg name="team" value="YELLOW_TEAM" />
     <arg name="side" value="RIGHT_SIDE" />
+    <arg name="ball_topic" value="/ball_position" />
   </include>
   <include file="$(find futrobotros)/launch/simulated_team.launch" ns="blue" >
     <arg name="team" value="BLUE_TEAM" />
     <arg name="side" value="LEFT_SIDE" />
+    <arg name="ball_topic" value="/ball_position" />
   </include>
 </launch>

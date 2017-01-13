@@ -1,12 +1,13 @@
 <launch>
   <arg name="team"/>
   <arg name="side"/>
+  <arg name="ball_topic"/>
 
   <param name="team" type="string" value="$(arg team)" />
   <param name="side" type="string" value="$(arg side)" />
 
   <node pkg="futrobotros" type="strategy_node" name="strategy">
-    <remap from="strategy_input" to="team_poses"/>
+    <remap from="ball_position" to="$(arg ball_topic)"/>
     <remap from="strategy_output" to="team_references"/>
   </node>
   <node pkg="futrobotros" type="obstacle_avoidance_node" name="obstacle_avoidance">
