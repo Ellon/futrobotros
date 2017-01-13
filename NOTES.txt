@@ -14,3 +14,14 @@ Algumas anotações importantes para portar o futebol de robos pro ROS:
 
 - id_pos pode ser setado pela sequencia da msg.
 
+- getAdvantage usado somente pela estratégia
+
+- Usar conceitos de nó e nó privado no ROS
+
+- Usar "~" para nomes relativos
+
+- future_ball is set by localization and used by strategy
+
+- Correção de distorção visual e homografia é feita nas funções "calculaMinhaPose" em acquisition.
+
+- localization corrige a posição dos robôs e da bola. Necessário pq as marcas dos robôs estão em um plano acima do plano do campo.
