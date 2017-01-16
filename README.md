@@ -20,7 +20,7 @@ TODO
 ## Installation :
 
 Clone the repository or create a symbolic link into the `src` folder of your
-catkin workspace and run `catkin_make`. For examle, if you have a catkin
+catkin workspace and run `catkin_make`. For example, if you have a catkin
 workspace in `~/catkin_ws`, you can do:
 
     cd ~/catkin_ws/src
