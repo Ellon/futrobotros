@@ -139,7 +139,7 @@ target_link_libraries(futrobotros_Image
 )
 
 add_library(futrobotros_common
-  src/functions.cpp src/system.cpp src/futdata.cpp
+  src/functions.cpp src/system.cpp src/futdata.cpp src/dados_calibracao.cpp
 )
 target_link_libraries(futrobotros_common
   futrobotros_Image
