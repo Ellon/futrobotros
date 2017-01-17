@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   message_generation
   tf
+  cv_bridge
+  image_transport
 )
 
 ## System dependencies are found with CMake's conventions
