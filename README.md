@@ -34,11 +34,11 @@ Run `roslaunch` with the `start_*` launch files provided in [launch
 directory](launch/) to set up the system. Then use `rviz` for visualization
 and `rqt_graph` to inspect the system structure.
 
-### To run simulated mode
+### To run simulated mode :
 
     roslaunch futrobotros start_simulated.launch
 
-### To visualize
+### To visualize :
 
 The `rviz` configuration file provided in
 [rviz/futrobotros.rviz](rviz/futrobotros.rviz) provides you with all the
