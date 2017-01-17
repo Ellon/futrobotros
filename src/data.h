@@ -12,7 +12,7 @@
 #include <math.h>
 #include <iostream>
 
-// #include <imagem.h>
+#include <imagem.h>
 #include "parameters.h"
 
 #define NUM_POINTS 28 /**< \brief Numero de pontos notáveis no
@@ -30,113 +30,6 @@
 /** \todo Colocar o modo simulado para funcionar novamente. */
 
 /** \todo Fazer a pagina inicial da documentação.*/
-
-// ##################################################################
-// Variaveis CoordX declaradas em <imagem.h>, copied here while Image lib is
-// not ported to ROS version.
-
- // As classes para armazenar coordenadas de pontos
-
-// Ponto 2D
-
-struct Coord2{
-  double X,Y;
-  inline Coord2(double pX=0.0, double pY=0.0):X(pX),Y(pY) {}
-  inline Coord2 operator+(const Coord2 &C) const {
-    return Coord2(X+C.X, Y+C.Y);
-  }
-  inline Coord2 operator-(const Coord2 &C) const {
-    return Coord2(X-C.X, Y-C.Y);
-  }
-  inline double x() const {return X;}
-  inline double y() const {return Y;}
-  inline double u() const {return X;}
-  inline double v() const {return Y;}
-  inline double &x() {return X;}
-  inline double &y() {return Y;}
-  inline double &u() {return X;}
-  inline double &v() {return Y;}
-};
-inline Coord2 operator*(double K, const Coord2 &C) {
-  return Coord2(K*C.X, K*C.Y);
-}
-inline double sum2(const Coord2 &C) {
-  return C.X*C.X+C.Y*C.Y;
-}
-inline double euclid(const Coord2 &C) {
-  return sqrt(sum2(C));
-}
-inline std::ostream& operator<<(std::ostream& OS, const Coord2 &C) {
-  return OS << '(' << C.X << ',' << C.Y << ')';
-}
-
-// Conjunto de dois pontos 2D
-
-struct DCoord2
-{
-  Coord2 m,i;
-  inline DCoord2():
-    m(),i() {}
-  inline DCoord2(const Coord2 &pm, const Coord2 &pi):
-    m(pm),i(pi) {}
-};
-
-// Um conjunto de três pontos 2D
-
-struct TCoord2
-{
-  Coord2 p0,p1,p2;
-  inline TCoord2():
-    p0(),p1(),p2() {}
-  inline TCoord2(const Coord2 &P0, const Coord2 &P1, const Coord2 &P2):
-    p0(P0),p1(P1),p2(P2) {}
-  inline const Coord2 operator[](unsigned i) const {
-    return (i==0 ? p0 : (i==1 ? p1 : p2) );
-  }
-  inline Coord2 &operator[](unsigned i) {
-    return (i==0 ? p0 : (i==1 ? p1 : p2));
-  }
-};
-
-// Ponto 3D
-
-struct Coord3{
-  double X,Y,Z;
-  inline Coord3(double pX=0.0, double pY=0.0, double pZ=0.0):
-    X(pX),Y(pY),Z(pZ) {}
-  inline double x() const {return X;}
-  inline double y() const {return Y;}
-  inline double z() const {return Z;}
-  inline double u() const {return X;}
-  inline double v() const {return Y;}
-  inline double theta() const { return Z; }
-  inline double &x() {return X;}
-  inline double &y() {return Y;}
-  inline double &z() {return Z;}
-  inline double &u() {return X;}
-  inline double &v() {return Y;}
-  inline double &theta() { return Z; }
-};
-
-// Um conjunto de três pontos 3D
-
-struct TCoord3
-{
-  Coord3 p0,p1,p2;
-  inline TCoord3():
-    p0(),p1(),p2() {}
-  inline TCoord3(const Coord3 &P0, const Coord3 &P1, const Coord3 &P2):
-    p0(P0),p1(P1),p2(P2) {}
-  inline const Coord3 operator[](unsigned i) const {
-    return (i==0 ? p0 : (i==1 ? p1 : p2) );
-  }
-  inline Coord3 &operator[](unsigned i) {
-    return (i==0 ? p0 : (i==1 ? p1 : p2));
-  }
-};
-
-// ##################################################################
-
 
 /** \brief Lado do campo 
  */
