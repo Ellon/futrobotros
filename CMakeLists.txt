@@ -146,6 +146,7 @@ target_link_libraries(futrobotros_common
 )
 
 ## Declare a cpp executable
+add_executable(acquisition_node src/acquisition_node.cpp src/acquisition.cpp)
 add_executable(localization_node src/localization_node.cpp)
 add_executable(strategy_node src/strategy_node.cpp src/strategy.cpp)
 add_executable(obstacle_avoidance_node src/obstacle_avoidance_node.cpp src/obstacles.cpp)
@@ -160,6 +161,9 @@ add_executable(field_visualization src/field_visualization.cpp)
 # add_dependencies(futrobotros_node futrobotros_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
+target_link_libraries(acquisition_node
+  ${catkin_LIBRARIES} futrobotros_common futrobotros_Image
+)
 target_link_libraries(localization_node
   ${catkin_LIBRARIES}
 )
@@ -186,6 +190,7 @@ target_link_libraries(field_visualization
 )
 
 ## Specify dependencies on local messages to generate message files before compiling nodes
+add_dependencies(acquisition_node futrobotros_generate_messages_cpp)
 add_dependencies(localization_node futrobotros_generate_messages_cpp)
 add_dependencies(strategy_node futrobotros_generate_messages_cpp)
 add_dependencies(obstacle_avoidance_node futrobotros_generate_messages_cpp)
