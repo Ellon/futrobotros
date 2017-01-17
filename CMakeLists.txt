@@ -104,6 +104,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(src/matrix)
+include_directories(src/otim)
 
 ## Declare a cpp library
 add_library(futrobotros_common
@@ -118,6 +119,13 @@ add_library(futrobotros_matrix
   src/matrix/cvector.cpp #src/matrix/tvector.cpp
   src/matrix/matrix.cpp #src/matrix/tmatrix.cpp
   src/matrix/cmatrix.cpp #src/matrix/tmatrix.cpp
+)
+
+add_library(futrobotros_otim
+  src/otim/genetico.cpp
+  src/otim/myotim.cpp
+  src/otim/otim.cpp
+  src/otim/poliedro.cpp
 )
 
 ## Declare a cpp executable
