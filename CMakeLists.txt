@@ -103,11 +103,21 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+include_directories(src/matrix)
 
 ## Declare a cpp library
 add_library(futrobotros_common
   src/functions.cpp src/system.cpp src/futdata.cpp
+)
+
+# NOTE: t*.cpp files should not be listed here: they are included (!) by other the other cpp files (!!)
+#       That is why they are commented out below.
+add_library(futrobotros_matrix
+  src/matrix/mymatrix.cpp 
+  src/matrix/vector.cpp #src/matrix/tvector.cpp
+  src/matrix/cvector.cpp #src/matrix/tvector.cpp
+  src/matrix/matrix.cpp #src/matrix/tmatrix.cpp
+  src/matrix/cmatrix.cpp #src/matrix/tmatrix.cpp
 )
 
 ## Declare a cpp executable
