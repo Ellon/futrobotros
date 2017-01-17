@@ -29,3 +29,9 @@ Algumas anotações importantes para portar o futebol de robos pro ROS:
 - as constantes do controlador devem ser setadas através de parametros, talvez usando dynamic reconfigure?
 
 - Lidar propriamente com POSITION_UNDEFINED (provavelmente eliminar, e achar uma alternativa)
+
+- Dá pra acessar a webcam usando rosrun usb_cam usb_cam_node _image_width:=1280 _image_height:=720
+
+- Comparar o código do futebol comentado pelo Marcial, e o código utilizado em 2016.
+
+- Criar um modelo pro robô no gazebo
