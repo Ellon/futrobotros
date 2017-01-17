@@ -108,10 +108,6 @@ include_directories(src/otim)
 include_directories(src/Imagem)
 
 ## Declare a cpp library
-add_library(futrobotros_common
-  src/functions.cpp src/system.cpp src/futdata.cpp
-)
-
 # NOTE: t*.cpp files should not be listed here: they are included (!) by other the other cpp files (!!)
 #       That is why they are commented out below.
 add_library(futrobotros_matrix
@@ -128,11 +124,25 @@ add_library(futrobotros_otim
   src/otim/otim.cpp
   src/otim/poliedro.cpp
 )
+target_link_libraries(futrobotros_otim
+  futrobotros_matrix
+)
 
 add_library(futrobotros_Image
   src/Imagem/distradial.cpp
   src/Imagem/homografia.cpp
   src/Imagem/imagem.cpp
+)
+target_link_libraries(futrobotros_Image
+  futrobotros_otim
+  futrobotros_matrix
+)
+
+add_library(futrobotros_common
+  src/functions.cpp src/system.cpp src/futdata.cpp
+)
+target_link_libraries(futrobotros_common
+  futrobotros_Image
 )
 
 ## Declare a cpp executable
