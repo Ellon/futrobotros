@@ -276,7 +276,8 @@ class ImagemRGB
   // Cuidado ao usar! Nao altere os dados para onde os ponteiros apontam...
   const void *getPNMData();
   size_t getPNMSize();
-  const PxRGB *getRawData();
+  const PxRGB *getConstRawData();
+  PxRGB *getRawData();
   size_t getRawSize();
 };
 

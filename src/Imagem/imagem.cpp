@@ -799,7 +799,12 @@ const void *ImagemRGB::getPNMData()
   return ptPNM;
 }
 
-const PxRGB *ImagemRGB::getRawData()
+const PxRGB *ImagemRGB::getConstRawData()
+{
+  return img;
+}
+
+PxRGB *ImagemRGB::getRawData()
 {
   return img;
 }
